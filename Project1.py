@@ -1,29 +1,5 @@
 # Project 1. Number Guessing Game (CLI)
 
-
-# Goal: Build a terminal game where the computer picks a number and the user guesses with
-
-# feedback.
-
-# Concepts: input/output, int conversion, while loop, random, conditionals
-
-# Core tasks:
-
-# • Generate a random integer in a range (e.g., 1-100).
-
-# • Loop until the user guesses correctly or quits.
-
-# • Validate input (non-numbers, out-of-range).
-
-# • Track number of attempts and show a final score.
-
-# Stretch goals:
-
-# • Add difficulty modes (different ranges / max attempts).
-
-# • Keep a high-score list in a file.
-
-
 import random
 
 print("Select Difficulty: ")
@@ -66,4 +42,20 @@ while True:
         print("Your guess is higher than the number")
     else:
         print(f"Congratulations! You guessed the number in {guesses} tries")
-        break
+
+        try:
+            file = open("highscore.txt", "r")
+            best_score = int(file.read())
+            file.close()
+        except:
+            best_score = guesses
+
+            if guesses <= best_score:
+                file = open("highscore.txt", "w")
+                file.write(str(guesses))
+                file.close()
+                print("New High Score!")
+            else:
+                print("Best Score is", best_score)
+
+                break
